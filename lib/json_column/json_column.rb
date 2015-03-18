@@ -1,4 +1,6 @@
 module JsonColumn
-  class JsonColumn < OpenStruct
+  class JsonColumn < HashWithIndifferentAccess
+    attr_accessor :schema
+
   end
 end

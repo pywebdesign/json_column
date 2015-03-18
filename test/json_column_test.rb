@@ -5,12 +5,39 @@ class JsonColumnTest < ActiveSupport::TestCase
     assert_kind_of Module, JsonColumn
   end
 
-  test "create getter and setter for columns provided" do
-    assert TestModel.new.respond_to? :test
-    assert TestModel.new.respond_to? :test=
+  test "dummy app has a json column and a testmodel AR class" do
+    assert TestModel.new.is_a? TestModel
+    assert TestModel.new.respond_to? :json
   end
 
-  test "column set as jsoncolumn are JsonColumn" do
-    assert TestModel.new.test.is_a? JsonColumn::JsonColumn
+  test "gette for columns provided" do
+    assert TestModel.new.respond_to? :json
+  end
+
+  test "json column are JsonColumn" do
+    assert TestModel.new.json.is_a? JsonColumn::JsonColumn
+  end
+
+  test "JsonColumn respont to schema" do
+    assert TestModel.new.json.respond_to? :schema
+    assert TestModel.new.json.respond_to? :schema=
+    refute TestModel.new.json.respond_to? :a
+  end
+
+  test "JsonColumn load their schema from infered module" do
+    assert TestModel.new.json.schema == Schemas::Json.schema
+  end
+
+  test "JsonColumn can receive Hash to change but stay of type JsonColumn" do
+    t = TestModel.new
+    t.json = {a: 42}
+    assert t.json.is_a? JsonColumn::JsonColumn
+  end
+
+  test "Jsoncolumn change are saved to database" do
+    t = TestModel.new
+    t.json = {a: 42}
+    t.save
+    assert t.reload.json.to_s == HashWithIndifferentAccess[{"a": 42}].to_s
   end
 end
