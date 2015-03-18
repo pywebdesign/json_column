@@ -20,7 +20,7 @@ module Schemas::Profile
   def self.schema
   {
     type: "object",
-    required: ["first_name", "Last_name"]
+    required: ["first_name", "Last_name"],
     properties: {
       first_name: {type: "string"},
       last_name: {type: "string"}
@@ -45,8 +45,17 @@ Then on the model file, simply add acts_as_json_column
 class User < ActiveRecord::Base
   acts_as_json_column columns: [:profile]
 end
+```
 
 ##Usage
+
+Simply use your json column as before. Note that JsonColumn is a HashWithIndifferentAccess so ```ruby profile["first_name"]``` is identical to ```ruby profile[:first_name]```.
+
+```ruby
+
+User.first.profile
+
+```
 
 ##Customize
 You can easily switch to postgis by changing line 8 in fig.yml to:
