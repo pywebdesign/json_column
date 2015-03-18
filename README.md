@@ -54,7 +54,7 @@ Simply use your json column as before. Note that JsonColumn is a HashWithIndiffe
 ```ruby
 
 u = User.new
-#=>#<Userx...>
+#=>#<User:0x...>
 
 u.profile.schema
 #=> {:type=>"object",
