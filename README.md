@@ -1,5 +1,8 @@
 #Simple Json column with validation for rails and PostgreSQL Json/Jsonb field
 
+##Goal
+This gem aim to replace the simple Hash representation with a more useful representation object for json colums. Right now it is pretty much only another way to implement json-schema validation.
+
 ##Installation
 
 Install gem
