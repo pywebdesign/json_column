@@ -1,19 +1,35 @@
-#Simple Rails dev env with postgresql and postgis
+#Simple Json column with validation for rails and PostgreSQL Json/Jsonb field
 
+##Installation
+
+Install gem
+
+```
+gem install json_column
+```
+##Setup
+
+JsonColumn use json-schema gem for validation. It will load the schema file form the app/models/schemas
+
+For exemple, a json profile for a user coul be defined as
+
+```ruby
+# app/models/schemas/profile.rb
+
+module Schemas::Profile
+  def self.schema
+  {
+    type: "object",
+    required: ["first_name", "Last_name"]
+    properties: {
+      first_name: {type: "string"},
+      last_name: {type: "string"}
+    }
+  }
+  end
+end
+```
 ##Usage
-Install Docker and docker-compose, try google!
-
-1. run:
-`. setup.sh`
-1. wait..., say yes, wait...
-1. then start the dev server:
-`docker-compose up`
-
-look your new server is running on localhost:3000
-
-You can edit you rails app files in host and they will be instantly sync with your docker container running your dev server.
-
-Don't want to wait for every project to install the same gems? Copy paste the vendor/bundle from a previous installation.
 
 ##Customize
 You can easily switch to postgis by changing line 8 in fig.yml to:
