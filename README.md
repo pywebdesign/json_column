@@ -56,11 +56,6 @@ Simply use your json column as before. Note that JsonColumn is a HashWithIndiffe
 u = User.new
 #=>#<User:0x...>
 
-u.profile.schema
-#=> {:type=>"object",
-#  :required=>["first_name", "last_name"],
-#  :properties=>{:first_name=>{:type=>"string"}, :last_name=>{:type=>"string"}}}
-
 u.profile = {"first_name": "John", last_name: "Snow"}
 #=> {:first_name=>"John", :last_name=>"Snow"}
 
@@ -70,6 +65,15 @@ u.save
 u.reload.profile
 #=> {"first_name"=>"John", "last_name"=>"Snow"}
 
+```
+
+Access the schema easily
+
+```ruby
+u.profile.schema
+#=> {:type=>"object",
+#  :required=>["first_name", "last_name"],
+#  :properties=>{:first_name=>{:type=>"string"}, :last_name=>{:type=>"string"}}}
 ```
 
 ##Customize
