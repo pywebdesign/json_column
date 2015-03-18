@@ -52,7 +52,7 @@ end
 
 ##Usage
 
-Simply use your json column as before. Note that JsonColumn is a HashWithIndifferentAccess so ```ruby profile["first_name"]``` is identical to ```ruby profile[:first_name]```.
+Simply use your json column as before. Note that JsonColumn is a HashWithIndifferentAccess so ``` profile["first_name"]``` is identical to ``` profile[:first_name]```.
 
 ```ruby
 
