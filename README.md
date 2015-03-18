@@ -11,7 +11,7 @@ gem install json_column
 
 JsonColumn use json-schema gem for validation. It will load the schema file form the app/models/schemas
 
-For exemple, a json profile for a user coul be defined as
+A json profile for a user model could be defined as
 
 ```ruby
 # app/models/schemas/profile.rb
@@ -29,6 +29,23 @@ module Schemas::Profile
   end
 end
 ```
+
+Then on the model file, simply add acts_as_json_column
+
+```ruby
+
+# == Schema Information
+#
+# Table name: users
+#
+#  id            :uuid             not null, primary key
+#  profile       :jsonb
+#
+
+class User < ActiveRecord::Base
+  acts_as_json_column columns: [:profile]
+end
+
 ##Usage
 
 ##Customize
