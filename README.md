@@ -20,7 +20,7 @@ module Schemas::Profile
   def self.schema
   {
     type: "object",
-    required: ["first_name", "Last_name"],
+    required: ["first_name", "last_name"],
     properties: {
       first_name: {type: "string"},
       last_name: {type: "string"}
