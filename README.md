@@ -1,31 +1,88 @@
-#Simple Rails dev env with postgresql and postgis
+#Simple Json column with validation for rails and PostgreSQL Json/Jsonb field
+
+##Goal
+This gem aim to replace the simple Hash representation with a more useful representation object for json colums. Right now it is pretty much only another way to implement json-schema validation.
+
+##Installation
+
+Install gem
+
+```
+gem install json_column
+```
+##Setup
+
+JsonColumn use json-schema gem for validation. It will load the schema file form the app/models/schemas
+
+A json profile for a user model could be defined as
+
+```ruby
+# app/models/schemas/profile.rb
+
+module Schemas::Profile
+  def self.schema
+  {
+    type: "object",
+    required: ["first_name", "last_name"],
+    properties: {
+      first_name: {type: "string"},
+      last_name: {type: "string"}
+    }
+  }
+  end
+end
+```
+
+Then on the model file, simply add acts_as_json_column
+
+```ruby
+
+# == Schema Information
+#
+# Table name: users
+#
+#  id            :uuid             not null, primary key
+#  profile       :jsonb
+#
+
+class User < ActiveRecord::Base
+  acts_as_json_column columns: [:profile]
+end
+```
 
 ##Usage
-Install Docker and docker-compose, try google!
 
-1. run:
-`. setup.sh`
-1. wait..., say yes, wait...
-1. then start the dev server:
-`docker-compose up`
+Simply use your json column as before. Note that JsonColumn is a HashWithIndifferentAccess so ``` profile["first_name"]``` is identical to ``` profile[:first_name]```.
 
-look your new server is running on localhost:3000
+```ruby
 
-You can edit you rails app files in host and they will be instantly sync with your docker container running your dev server.
+u = User.new
+#=>#<User:0x...>
 
-Don't want to wait for every project to install the same gems? Copy paste the vendor/bundle from a previous installation.
+u.profile = {"first_name": "John", last_name: "Snow"}
+#=> {:first_name=>"John", :last_name=>"Snow"}
 
-##Customize
-You can easily switch to postgis by changing line 8 in fig.yml to:
-`image: "pywebdesign/postgis"`
+u.save
+#=> true
 
-Be sure to also change line 2 in database.setup.yml file to:
-`adapter: postgis`
+u.reload.profile
+#=> {"first_name"=>"John", "last_name"=>"Snow"}
 
-## Notes
-If you want to run rake or rails command like `rails generate model cafe...` you must do so in the docker container. Just add docker-compose run web before each command like so:
+```
 
-`docker compose run web rake db:migrate`
+Access the schema easily
 
-### Generated files
-generated files wont be yours, just run `. unlock.sh` to get ownership after generating them!
+```ruby
+u.profile.schema
+#=> {:type=>"object",
+#  :required=>["first_name", "last_name"],
+#  :properties=>{:first_name=>{:type=>"string"}, :last_name=>{:type=>"string"}}}
+```
+
+##Notes
+
+Your can provide more than one json column to the acts_as_json_column method
+
+```ruby
+acts_as_json_column columns: [:first_column_name, :second_column_name]
+```
