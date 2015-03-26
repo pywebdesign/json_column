@@ -86,3 +86,14 @@ Your can provide more than one json column to the acts_as_json_column method
 ```ruby
 acts_as_json_column columns: [:first_column_name, :second_column_name]
 ```
+
+
+##TODO
+###Read [Using PostgreSQL and jsonb with Ruby on Rails](http://nandovieira.com/using-postgresql-and-jsonb-with-ruby-on-rails)
+
+* user serializer better
+* user store_accessor
+* integrate better querry DLS
+* add generator fox indexes maybe
+* thanks the author of this post
+
