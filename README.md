@@ -69,6 +69,7 @@ u = User.new
 u.profile = {"first_name": "John", last_name: "Snow"}
 #=> {:first_name=>"John", :last_name=>"Snow"}
 
+# it will validate (soon completely) the json using the schema definition.
 u.save
 #=> true
 
@@ -89,6 +90,11 @@ u.profile.schema
 #  :required=>["first_name", "last_name"],
 #  :properties=>{:first_name=>{:type=>"string"}, :last_name=>{:type=>"string"}}}
 ```
+##Validations
+All json_column will be completely validated (soon) on save with their respective schema. to understand a little better read:
+
+See [json-schema](http://json-schema.org)
+And [json_schema gem](https://github.com/ruby-json-schema/json-schema)
 
 ##Notes
 
