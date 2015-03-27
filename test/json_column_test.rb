@@ -50,4 +50,12 @@ class JsonColumnTest < ActiveSupport::TestCase
     t.save
     assert t.reload.json.to_s == HashWithIndifferentAccess[{"a": 42}].to_s
   end
+
+  test "Jsoncolumn validate data on asignment" do
+    t = TestModel.new
+    assert_raise do
+      t.json[:a] = "string"
+    end
+
+  end
 end
