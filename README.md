@@ -104,6 +104,9 @@ Your can provide more than one json column to the acts_as_json_column method
 acts_as_json_column columns: [:first_column_name, :second_column_name]
 ```
 
+##Problems
+
+* does not validate deep key/value pair. I still did not find a way to implement it
 
 ##TODO
 ###Read 
