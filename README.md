@@ -90,7 +90,7 @@ u.profile.schema
 #  :required=>["first_name", "last_name"],
 #  :properties=>{:first_name=>{:type=>"string"}, :last_name=>{:type=>"string"}}}
 ```
-##validations
+##Validations
 All json_column will be completely validated (soon) on save with their respective schema. to understand a little better read:
 
 See [json-schema](http://json-schema.org)
