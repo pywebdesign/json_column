@@ -17,13 +17,14 @@ module JsonColumn
             schema = "Schemas::#{sch.to_s.camelize}".constantize.schema
           end
 
-          #define a getter
+          #define a getter for the column, it will return a JsonColumn object
           temp_field_name = "#{col}_acts_as_json_cache".to_sym
           cattr_accessor temp_field_name
 
+          ## that could be change for a serializer maybe
+          #redefine getter on the AR model
           define_method(col) do
             unless self.send(temp_field_name).is_a? JsonColumn
-              Rails.logger.info "creating a JsonColumn"
               json = read_attribute(col)
               if json
                 Rails.logger.info "Invalid json data; validated with#{schema.class.name}" unless JSON::Validator.validate(schema, json)
@@ -38,7 +39,7 @@ module JsonColumn
             end
           end
 
-          #define a setter
+          #redefine the setter on the AR model
           define_method("#{col}=") do |data|
             self.send("#{col}_will_change!") unless data == self.send("#{col}")
             if data.is_a? HashWithIndifferentAccess or data.is_a? Hash #why || does not work but or does?
