@@ -48,6 +48,13 @@ Then on the model file, simply add acts_as_json_column
 class User < ActiveRecord::Base
   acts_as_json_column columns: [:profile]
 end
+
+# or define asign another schema to a columns
+class User < ActiveRecord::Base
+  acts_as_json_column columns: [profile: :MyOtherSchema]
+end
+
+# It will load the schema file in app/models/schemas/my_other_schema.rb
 ```
 
 ##Usage
