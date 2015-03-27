@@ -91,7 +91,7 @@ u.profile.schema
 #  :properties=>{:first_name=>{:type=>"string"}, :last_name=>{:type=>"string"}}}
 ```
 ##validations
-All json_column will be validated on save with their respective schema. to understand a little better read:
+All json_column will be completely validated (soon) on save with their respective schema. to understand a little better read:
 
 See [json-schema](http://json-schema.org)
 And [json_schema gem](https://github.com/ruby-json-schema/json-schema)
