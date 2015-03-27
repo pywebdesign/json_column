@@ -69,7 +69,7 @@ u = User.new
 u.profile = {"first_name": "John", last_name: "Snow"}
 #=> {:first_name=>"John", :last_name=>"Snow"}
 
-# it will validate the json using the schema definition.
+# it will validate (soon) the json using the schema definition.
 u.save
 #=> true
 
