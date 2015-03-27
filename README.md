@@ -100,10 +100,12 @@ acts_as_json_column columns: [:first_column_name, :second_column_name]
 
 
 ##TODO
-###Read [Using PostgreSQL and jsonb with Ruby on Rails](http://nandovieira.com/using-postgresql-and-jsonb-with-ruby-on-rails)
+###Read 
 
-* user serializer better
-* user store_accessor
+[Using PostgreSQL and jsonb with Ruby on Rails](http://nandovieira.com/using-postgresql-and-jsonb-with-ruby-on-rails)
+
+* user serializer better #probably not a good idea finally
+* user store_accessor #probably not a good idea finally
 * integrate better querry DLS
 * add generator fox indexes maybe
 * thanks the author of this post
