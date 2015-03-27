@@ -18,10 +18,20 @@ class JsonColumnTest < ActiveSupport::TestCase
     assert TestModel.new.json.is_a? JsonColumn::JsonColumn
   end
 
-  test "JsonColumn respont to schema" do
+  test "JsonColumn responds to schema" do
     assert TestModel.new.json.respond_to? :schema
     assert TestModel.new.json.respond_to? :schema=
-    refute TestModel.new.json.respond_to? :a
+
+  end
+
+  test "JsonColumn responds to properties name method" do
+    assert TestModel.new.json.respond_to? :a
+    refute TestModel.new.json.respond_to? :randomnamemetsa
+  end
+
+  test "JsonColumn properties named method are in instance scope and not class method" do
+    assert TestModel.new.json.respond_to? :a
+    refute BModel.new.json.respond_to? :a
   end
 
   test "JsonColumn load their schema from infered module" do

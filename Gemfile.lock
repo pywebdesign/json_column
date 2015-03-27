@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    json_column (0.1.0)
+    json_column (0.3.0)
       json-schema (~> 2.5.0)
       pg
       rails (~> 4.2.0)
