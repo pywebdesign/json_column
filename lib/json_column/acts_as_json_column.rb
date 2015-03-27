@@ -9,12 +9,15 @@ module JsonColumn
 
       def acts_as_json_column columns:
 
-        columns.each do |col, sch|
+        columns.each do |col|
           #find the right schema json file module and load the json
-          unless sch
+          unless col.is_a? Hash
             schema = "Schemas::#{col.to_s.camelize}".constantize.schema
           else
-            schema = "Schemas::#{sch.to_s.camelize}".constantize.schema
+            key, value = col.first
+            col = key
+            filename = value.to_s.camelize
+            schema = "Schemas::#{filename}".constantize.schema
           end
 
           #define a getter for the column, it will return a JsonColumn object
