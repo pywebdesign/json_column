@@ -69,7 +69,7 @@ u = User.new
 u.profile = {"first_name": "John", last_name: "Snow"}
 #=> {:first_name=>"John", :last_name=>"Snow"}
 
-# it will validate the json using the schema definition. See [json-schema](http://json-schema.org)
+# it will validate the json using the schema definition.
 u.save
 #=> true
 
@@ -90,7 +90,9 @@ u.profile.schema
 #  :required=>["first_name", "last_name"],
 #  :properties=>{:first_name=>{:type=>"string"}, :last_name=>{:type=>"string"}}}
 ```
-
+##validations
+See [json-schema](http://json-schema.org)
+And [json_schema gem](https://github.com/ruby-json-schema/json-schema)
 ##Notes
 
 Your can provide more than one json column to the acts_as_json_column method
