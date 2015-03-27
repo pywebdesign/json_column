@@ -68,6 +68,10 @@ u.save
 u.reload.profile
 #=> {"first_name"=>"John", "last_name"=>"Snow"}
 
+#raise an error when accessign key as a property
+u.reload.profile.first_name
+#=> RuntimeError: Access the properties first_name with [:first_name]
+
 ```
 
 Access the schema easily
