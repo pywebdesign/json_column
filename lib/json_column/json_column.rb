@@ -7,7 +7,7 @@ module JsonColumn
 
     def schema=(sch)
       @schema = sch
-      schema[:properties].each do |key, value|
+      @schema[:properties].each do |key, value|
         define_instance_method(key) do
           raise "Access the properties #{key} with [:#{key}]"
         end

@@ -13,12 +13,16 @@ module JsonColumn
           #find the right schema json file module and load the json
           unless col.is_a? Hash
             schema = "Schemas::#{col.to_s.camelize}".constantize.schema
+            puts "--------"
+            puts schema.class
+            puts "------"
           else
             key, value = col.first
             col = key
             filename = value.to_s.camelize
             schema = "Schemas::#{filename}".constantize.schema
           end
+
 
           #define a getter for the column, it will return a JsonColumn object
           temp_field_name = "#{col}_acts_as_json_cache".to_sym
