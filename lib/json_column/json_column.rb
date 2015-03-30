@@ -3,6 +3,7 @@ module JsonColumn
 
     def initialize
       super
+      puts self
     end
 
     def schema=(sch)
@@ -16,6 +17,14 @@ module JsonColumn
 
     def schema
       @schema || nil
+    end
+
+    def list
+      str = ""
+      @schema[:properties].each do |key, value|
+        str += "#{key}: #{value[:description]} - | -"
+      end
+      str
     end
 
     def define_instance_method(name, &block)

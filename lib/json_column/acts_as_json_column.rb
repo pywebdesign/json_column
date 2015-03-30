@@ -40,6 +40,7 @@ module JsonColumn
               end
               json_column = JsonColumn[json]
               json_column.schema = schema
+
               self.send("#{temp_field_name}=", json_column)
             else
               self.send(temp_field_name)
