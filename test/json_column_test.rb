@@ -53,7 +53,7 @@ class JsonColumnTest < ActiveSupport::TestCase
 
   test "Jsoncolumn validate data on asignment" do
     t = TestModel.new
-    assert_raise do
+    assert_raises RuntimeError do
       t.json[:a] = "string"
     end
 
