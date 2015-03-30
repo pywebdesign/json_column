@@ -1,0 +1,8 @@
+
+{
+  "type": "object",
+  "required": ["b"],
+  "properties": {
+    "b": {"type": "integer"}
+  }
+}
