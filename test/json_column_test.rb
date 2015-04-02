@@ -28,11 +28,6 @@ class JsonColumnTest < ActiveSupport::TestCase
     assert TestModel.new.json._schema == Schemas::Json.schema
   end
 
-  test "JsonColumn properties named method are in instance scope and not class method" do
-    assert TestModel.new.json.respond_to? :a
-    refute BModel.new.json.respond_to? :a
-  end
-
   test "JsonColumn can receive Hash to change but stay of type JsonColumn" do
     t = TestModel.new
     t.json = {a: 42}
