@@ -10,8 +10,8 @@ Gem::Specification.new do |s|
   s.authors     = ["Pierre-Yves Mathieu"]
   s.email       = ["pywebdesign@gmail.com"]
   s.homepage    = ""
-  s.summary     = "PostgreSQL json and jsonb column made easy"
-  s.description = "JsonColumn is a OpenStruc-like dynamic class replacing helping using json and jsonb postgresql column type in activerecord"
+  s.summary     = "A simple Json column with validation for rails and PostgreSQL Json/Jsonb field"
+  s.description = "JsonColumn is a simple HashWithIndifferentAccess with a ._schema method. It makes it easier to deal with json, jsonb postgresql column. It provide validation with josn-schema"
   s.license     = "MIT"
 
   s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.rdoc"]
