@@ -19,9 +19,9 @@ Gem::Specification.new do |s|
 
   s.add_dependency "rails", "~> 4.2.0"
   s.add_dependency "json-schema", "~> 2.5.0"
+  s.add_dependency "activerecord_json_validator", "~> 0.5.1"
 
   s.add_development_dependency "pg"
   s.add_development_dependency "pry-rails"
-  s.add_development_dependency "activerecord_json_validator", "~> 0.5.1"
 
 end

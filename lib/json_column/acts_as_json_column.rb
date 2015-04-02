@@ -35,11 +35,17 @@ module JsonColumn
             self.send(cache_name)
           else
             if schema["type"] == "array"
-              obj = JsonColumnArray
+              klass = JsonColumnArray
             else
-              obj = JsonColumnObject
+              klass = JsonColumnObject
             end
-            column = obj[read_attribute(col)]
+
+            if read_attribute(col)
+              column = klass[read_attribute(col)]
+            else
+              column = klass.new
+            end
+
             column._schema = schema
             self.send("#{cache_name}=", column)
             column
@@ -52,9 +58,9 @@ module JsonColumn
           else
             obj = JsonColumnObject
           end
-          column = obj[value]
-          column._schema = schema
-          self.send("#{cache_name}=", column)
+            column = obj[value]
+            column._schema = schema
+            self.send("#{cache_name}=", column)
         end
       end
 
