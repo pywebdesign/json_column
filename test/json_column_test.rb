@@ -41,7 +41,11 @@ class JsonColumnTest < ActiveSupport::TestCase
     assert t.reload.json.to_s == HashWithIndifferentAccess[{"a": 42}].to_s
   end
 
-  test "JsonColumn my be an array" do
-    #t = DModel.new
+  test "JsonColumn may be an array" do
+    t = DModel.new
+    assert t.arr.is_a? JsonColumn::JsonColumnArray
+    t.arr << {fsdfsd: "LKj"}
+    t.save
+    assert t.reload.arr == [{}, {fsdfsd: "LKj"}]
   end
 end
