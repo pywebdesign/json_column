@@ -2,12 +2,12 @@
 
 ##What is a JsonColumn
 
-JsonColumn is a simple HashWithIndifferentAccess with a ```._schema``` method. It makes it easyer to deal with json, jsonb postgresql column.
+JsonColumn is a simple HashWithIndifferentAccess with a ```._schema``` method. It makes it easier to deal with json, jsonb postgresql column.
 
-* it make properties accessible with ```column[:properties]```` or ```column["properties"]``` interchangly
-* it offer a convention on where should the json-schema be placed
-* it provide a nice way to integrate json_schema validation, we highly suggest to use [mirego/activerecord_json_validator](https://github.com/mirego/activerecord_json_validator)
-* it makes you model looks clean, no special setter, getter and serializer code for every Json columns.
+* It make properties accessible with ```column[:properties]``` or ```column["properties"]``` interchangeably
+* It offer a convention on where should the json-schema be placed, soon will also be changeable in config
+* It provide a nice way to integrate json_schema validatin.
+* It makes you model looks clean, no special setter, getter and serializer code for every Json columns.
 
 ##Installation
 
@@ -18,14 +18,11 @@ gem install json_column
 ```
 ##Setup
 
-It will load the schema file form the app/models/schemas
+It will load the schema file form the app/models/schemas. We decided not to put the file in /db/schema because it is not a database setup script in any way. We would like your opinion on where the json schema file should beé
 
-A json profile for a user model could be defined as
+A json profile schema for a user model could be defined as
 
-```JSON
-# app/models/schemas/profile.json
-
-
+```json
   {
     "type": "object",
     "required": ["first_name", "last_name"],
@@ -36,10 +33,11 @@ A json profile for a user model could be defined as
   }
 
 ```
+and put in **app/models/schemas/profile.json**
 
-or as a ya?ml
+or as a Yaml, which looks cleaner
 
-```ruby
+```yaml
     type: "object"
     required: 
       - "first_name"
@@ -53,7 +51,7 @@ or as a ya?ml
 
 Then on the model file, simply add acts_as_json_column
 
-```Yaml
+```ruby
 
 # == Schema Information
 #
@@ -66,8 +64,9 @@ Then on the model file, simply add acts_as_json_column
 class User < ActiveRecord::Base
   acts_as_json_column columns: [:profile]
 end
+# It will load the schema file in app/models/schemas/profile.rb
 
-# or define asign another schema to a columns
+# or define another schema to a columns
 class User < ActiveRecord::Base
   acts_as_json_column columns: [profile: :MyOtherSchema]
 end
@@ -80,7 +79,6 @@ end
 Simply use your json column as before. Note that JsonColumn is a HashWithIndifferentAccess so ``` profile["first_name"]``` is identical to ``` profile[:first_name]```.
 
 ```ruby
-
 u = User.new
 #=>#<User:0x...>
 
@@ -95,7 +93,7 @@ u.reload.profile
 
 ```
 
-Access the schema easily
+Access the schema easily, everywhere
 
 ```ruby
 u.profile._schema
@@ -104,7 +102,7 @@ u.profile._schema
 #  :properties=>{:first_name=>{:type=>"string"}, :last_name=>{:type=>"string"}}}
 ```
 ##Validations
-Validation ca be easily accomplished with [mirego/activerecord_json_validator](https://github.com/mirego/activerecord_json_validator)
+Validation can be easily accomplished with the same syntax as [mirego/activerecord_json_validator](https://github.com/mirego/activerecord_json_validator). We decided not to use it finally since it is overly complicated for the task. 
 
 ```ruby
 class User < ActiveRecord::Base
@@ -120,14 +118,15 @@ Your can provide more than one json column to the acts_as_json_column method
 acts_as_json_column columns: [profile: :UserProfile, ratings: :UserRatings]
 ```
 
-Makes sure to include all customized schema module names together at the end and automated infered schema module name in front like so
+Makes sure to include all customized schema module names column together at the end and automatically inferred schema module name column in front like so. Otherwise you will need to puts {} around each element from the passed array.
 
 ```ruby
 acts_as_json_column columns: [:first, :second, profile: :UserProfile, ratings: :UserRatings]
+
+# or if you really want:
+
+acts_as_json_column columns: [:first,  {profile: :UserProfile}, :second, {ratings: :UserRatings}]
 ```
 
 ##TODO
-###Read
-
-* integrate better querry DLS, it would be nice to access properties like activerecord ones! Maybe use Hashies gem
-
+* integrate better querry DLS, it would be nice to access properties like activerecord ones! Maybe use Hashies gem or store_accessor
