@@ -1,7 +1,13 @@
 #Simple Json column with validation for rails and PostgreSQL Json/Jsonb field
 
-##Goal
-This gem aim to replace the simple Hash representation with a more useful representation object for json colums. Right now it is pretty much only another way to implement json-schema validation.
+##What is a JsonColumn
+
+JsonColumn is a simple HashWithIndifferentAccess with a ```._schema``` method. It makes it easyer to deal with json, jsonb postgresql column.
+
+* it make properties accessible with ```column[:properties]```` or ```column["properties"]``` interchangly
+* it offer a convention on where should the json-schema be placed
+* it provide a nice way to integrate json_schema validation, we highly suggest to use [mirego/activerecord_json_validator](https://github.com/mirego/activerecord_json_validator)
+* it makes you model looks clean, no special setter, getter and serializer code for every Json columns.
 
 ##Installation
 
@@ -69,7 +75,6 @@ u = User.new
 u.profile = {"first_name": "John", last_name: "Snow"}
 #=> {:first_name=>"John", :last_name=>"Snow"}
 
-# it will validate (soon completely) the json using the schema definition.
 u.save
 #=> true
 
@@ -85,37 +90,37 @@ u.reload.profile.first_name
 Access the schema easily
 
 ```ruby
-u.profile.schema
+u.profile._schema
 #=> {:type=>"object",
 #  :required=>["first_name", "last_name"],
 #  :properties=>{:first_name=>{:type=>"string"}, :last_name=>{:type=>"string"}}}
 ```
 ##Validations
-All json_column will be completely validated (soon) on save with their respective schema. to understand a little better read:
+Validation ca be easily accomplished with [mirego/activerecord_json_validator](https://github.com/mirego/activerecord_json_validator)
 
-See [json-schema](http://json-schema.org)
-And [json_schema gem](https://github.com/ruby-json-schema/json-schema)
+```ruby
+class User < ActiveRecord::Base
+  acts_as_json_column columns: [profile: :UserProfile, ratings: :UserRatings]
+  validates :profile, json: { schema: Schemas::UserProfile.schema }
+```
 
 ##Notes
 
 Your can provide more than one json column to the acts_as_json_column method
 
 ```ruby
-acts_as_json_column columns: [:first_column_name, :second_column_name]
+acts_as_json_column columns: [profile: :UserProfile, ratings: :UserRatings]
 ```
 
-##Problems
+Makes sure to include all customized schema module names together at the end and automated infered schema module name in front like so
 
-* does not validate deep key/value pair. I still did not find a way to implement it
+```ruby
+acts_as_json_column columns: [:first, :second, profile: :UserProfile, ratings: :UserRatings]
+```
 
 ##TODO
-###Read 
+###Read
 
-[Using PostgreSQL and jsonb with Ruby on Rails](http://nandovieira.com/using-postgresql-and-jsonb-with-ruby-on-rails)
+* integrate better querry DLS, it would be nice to access properties like activerecord ones!
 
-* user serializer better #probably not a good idea finally
-* user store_accessor #probably not a good idea finally
-* integrate better querry DLS
-* add generator fox indexes maybe
-* thanks the author of this post
 
