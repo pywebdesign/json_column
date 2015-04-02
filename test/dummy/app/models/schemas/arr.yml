@@ -1,7 +1,7 @@
 
 $schema: "http://json-schema.org/draft-04/schema#"
 title: "Profile"
-description: "Profile of a person using Intrica"
+description: "Profile of a person"
 type: "array"
 items:
   type: "object"
@@ -11,8 +11,6 @@ items:
     fun:
       type: "integer"
     knowledge:
-      type: "integer"
-    pedagogy:
       type: "integer"
     results:
       type: "integer"
