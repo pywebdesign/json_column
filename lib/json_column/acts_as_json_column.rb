@@ -10,63 +10,44 @@ module JsonColumn
       def acts_as_json_column columns:
 
         columns.each do |col|
-          #find the right schema json file module and load the json
-          unless col.is_a? Hash
+          if col.is_a? Symbol
+            serialize "#{col}".to_sym, Hash
             schema = "Schemas::#{col.to_s.camelize}".constantize.schema
-            puts "--------"
-            puts schema.class
-            puts "------"
-          else
-            key, value = col.first
-            col = key
-            filename = value.to_s.camelize
-            schema = "Schemas::#{filename}".constantize.schema
-          end
-
-
-          #define a getter for the column, it will return a JsonColumn object
-          temp_field_name = "#{col}_acts_as_json_cache".to_sym
-          cattr_accessor temp_field_name
-
-          ## that could be change for a serializer maybe
-          #redefine getter on the AR model
-          define_method(col) do
-            unless self.send(temp_field_name).is_a? JsonColumn
-              json = read_attribute(col)
-              if json
-                Rails.logger.info "Invalid json data; validated with#{schema.class.name}" unless JSON::Validator.validate(schema, json)
-              else
-                json = {}
-              end
-              json_column = JsonColumn[json]
-              json_column.schema = schema
-              self.send("#{temp_field_name}=", json_column)
-            else
-              self.send(temp_field_name)
+            cache_name = "cache_attr_#{col}".to_sym
+            cattr_accessor cache_name
+            define_accessor(col, cache_name, schema)
+          elsif col.is_a? Hash
+            cols = col
+            cols.each do |col, sch|
+              serialize "#{col}".to_sym, Hash
+              schema = "Schemas::#{sch.to_s.camelize}".constantize.schema
+              cache_name = "cache_attr_#{col}".to_sym
+              cattr_accessor cache_name
+              define_accessor(col, cache_name, schema)
             end
           end
+        end
+      end
 
-          #redefine the setter on the AR model
-          define_method("#{col}=") do |data|
-            self.send("#{col}_will_change!") unless data == self.send("#{col}")
-            if data.is_a? HashWithIndifferentAccess or data.is_a? Hash #why || does not work but or does?
-              json_column = JsonColumn[data]
-              raise "Invalid json data; validated with #{schema.class.name}" unless JSON::Validator.validate(schema, json_column)
-              json_column.schema = schema
-              self.send("#{temp_field_name}=", json_column)
-              write_attribute(col, json_column)
-            elsif data.is_a? JsonColumn
-              raise "Invalid json data; validated with #{schema.class.name}" unless JSON::Validator.validate(schema, data)
-              data.schema = schema
-              self.send("#{temp_field_name}=", data)
-              write_attribute(col, data)
-            else
-               raise "#{col}= takes an Hash or a JsonColumn object"
-             end
-           end
+      def define_accessor(col, cache_name, schema)
+        define_method(col) do
+          if self.send(cache_name)
+            self.send(cache_name)
+          else
+            column = JsonColumn[read_attribute(col)]
+            column._schema = schema
+            self.send("#{cache_name}=", column)
+            column
+          end
         end
 
+        define_method("#{col}=") do |value|
+          column = JsonColumn[value]
+          column._schema = schema
+          self.send("#{cache_name}=", column)
+        end
       end
+
     end
   end
 end
