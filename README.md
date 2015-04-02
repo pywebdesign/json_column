@@ -22,7 +22,7 @@ It will load the schema file form the app/models/schemas
 
 A json profile for a user model could be defined as
 
-```ruby
+```JSON
 # app/models/schemas/profile.json
 
 
@@ -53,7 +53,7 @@ or as a ya?ml
 
 Then on the model file, simply add acts_as_json_column
 
-```ruby
+```Yaml
 
 # == Schema Information
 #
