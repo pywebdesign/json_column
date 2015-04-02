@@ -30,8 +30,8 @@ A json profile for a user model could be defined as
     "type": "object",
     "required": ["first_name", "last_name"],
     "properties": {
-      "first_name": {type: "string"},
-      "last_name": {type: "string"}
+      "first_name": {"type": "string"},
+      "last_name": {"type": "string"}
     }
   }
 
