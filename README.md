@@ -1,4 +1,5 @@
-#Simple Json column with validation for rails and PostgreSQL Json/Jsonb field
+#JsonColumn
+A simple Json column with validation for rails and PostgreSQL Json/Jsonb field
 
 ##What is a JsonColumn
 
