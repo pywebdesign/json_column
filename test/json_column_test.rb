@@ -31,7 +31,7 @@ class JsonColumnTest < ActiveSupport::TestCase
   test "JsonColumn can receive Hash to change but stay of type JsonColumn" do
     t = TestModel.new
     t.json = {a: 42}
-    assert t.json.is_a? JsonColumn::JsonColumn
+    assert t.json.is_a? JsonColumn::JsonColumnObject
   end
 
   test "Jsoncolumn change are saved to database" do
@@ -39,5 +39,13 @@ class JsonColumnTest < ActiveSupport::TestCase
     t.json = {a: 42}
     t.save
     assert t.reload.json.to_s == HashWithIndifferentAccess[{"a": 42}].to_s
+  end
+
+  test "JsonColumn may be an array" do
+    t = DModel.new
+    assert t.arr.is_a? JsonColumn::JsonColumnArray
+    t.arr << {fsdfsd: "LKj"}
+    t.save
+    assert t.reload.arr == [{}, {fsdfsd: "LKj"}]
   end
 end
