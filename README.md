@@ -18,7 +18,7 @@ gem install json_column
 ```
 ##Setup
 
-JsonColumn use json-schema gem for validation. It will load the schema file form the app/models/schemas
+It will load the schema file form the app/models/schemas
 
 A json profile for a user model could be defined as
 
