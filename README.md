@@ -1,4 +1,5 @@
-#Simple Json column with validation for rails and PostgreSQL Json/Jsonb field
+#JsonColumn
+A simple Json column with validation for rails and PostgreSQL Json/Jsonb field
 
 ##What is a JsonColumn
 
@@ -102,7 +103,7 @@ u.profile._schema
 #  :properties=>{:first_name=>{:type=>"string"}, :last_name=>{:type=>"string"}}}
 ```
 ##Validations
-Validation can be easily accomplished with the same syntax as [mirego/activerecord_json_validator](https://github.com/mirego/activerecord_json_validator). We decided not to use it finally since it is overly complicated for the task. 
+Validation can be easily accomplished with the same syntax as [mirego/activerecord_json_validator](https://github.com/mirego/activerecord_json_validator). We decided not to use mirego's gem finally since it is overly complicated for the task. 
 
 ```ruby
 class User < ActiveRecord::Base
