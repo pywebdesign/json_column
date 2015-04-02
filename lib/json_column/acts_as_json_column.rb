@@ -11,7 +11,7 @@ module JsonColumn
 
         columns.each do |col|
           if col.is_a? Symbol
-            serialize "#{col}".to_sym, Hash
+            #serialize "#{col}".to_sym, Hash
             schema = "Schemas::#{col.to_s.camelize}".constantize.schema
             cache_name = "cache_attr_#{col}".to_sym
             cattr_accessor cache_name
@@ -19,7 +19,7 @@ module JsonColumn
           elsif col.is_a? Hash
             cols = col
             cols.each do |col, sch|
-              serialize "#{col}".to_sym, Hash
+             # serialize "#{col}".to_sym, Hash
               schema = "Schemas::#{sch.to_s.camelize}".constantize.schema
               cache_name = "cache_attr_#{col}".to_sym
               cattr_accessor cache_name
