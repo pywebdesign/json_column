@@ -81,10 +81,6 @@ u.save
 u.reload.profile
 #=> {"first_name"=>"John", "last_name"=>"Snow"}
 
-#raise an error when accessign key as a property
-u.reload.profile.first_name
-#=> RuntimeError: Access the properties first_name with [:first_name]
-
 ```
 
 Access the schema easily
@@ -121,6 +117,5 @@ acts_as_json_column columns: [:first, :second, profile: :UserProfile, ratings: :
 ##TODO
 ###Read
 
-* integrate better querry DLS, it would be nice to access properties like activerecord ones!
-
+* integrate better querry DLS, it would be nice to access properties like activerecord ones! Maybe use Hashies gem
 
