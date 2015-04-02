@@ -46,6 +46,6 @@ class JsonColumnTest < ActiveSupport::TestCase
     assert t.arr.is_a? JsonColumn::JsonColumnArray
     t.arr << {fsdfsd: "LKj"}
     t.save
-    assert t.reload.arr == [nil, {fsdfsd: "LKj"}]
+    assert t.reload.arr == [{fsdfsd: "LKj"}]
   end
 end
