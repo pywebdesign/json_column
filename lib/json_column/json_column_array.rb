@@ -1,5 +1,5 @@
 module JsonColumn
-  class JsonColumn < HashWithIndifferentAccess
+  class JsonColumnArray < Array
 
     attr_accessor :_schema
     def initialize

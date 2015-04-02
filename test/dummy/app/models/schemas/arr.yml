@@ -1,0 +1,20 @@
+
+$schema: "http://json-schema.org/draft-04/schema#"
+title: "Profile"
+description: "Profile of a person using Intrica"
+type: "array"
+items:
+  type: "object"
+  properties:
+    ponctuality:
+      type: "integer"
+    fun:
+      type: "integer"
+    knowledge:
+      type: "integer"
+    pedagogy:
+      type: "integer"
+    results:
+      type: "integer"
+    recommend:
+      type: "integer"

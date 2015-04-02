@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    json_column (0.5.0)
+    json_column (0.5.1)
       activerecord_json_validator (~> 0.5.1)
       json-schema (~> 2.5.0)
       rails (~> 4.2.0)

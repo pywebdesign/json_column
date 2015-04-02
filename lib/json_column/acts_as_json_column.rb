@@ -34,7 +34,12 @@ module JsonColumn
           if self.send(cache_name)
             self.send(cache_name)
           else
-            column = JsonColumn[read_attribute(col)]
+            if schema["type"] == "array"
+              obj = JsonColumnArray
+            else
+              obj = JsonColumnObject
+            end
+            column = obj[read_attribute(col)]
             column._schema = schema
             self.send("#{cache_name}=", column)
             column
@@ -42,7 +47,12 @@ module JsonColumn
         end
 
         define_method("#{col}=") do |value|
-          column = JsonColumn[value]
+          if schema["type"] == "array"
+            obj = JsonColumnArray
+          else
+            obj = JsonColumnObject
+          end
+          column = obj[value]
           column._schema = schema
           self.send("#{cache_name}=", column)
         end
