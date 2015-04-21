@@ -44,18 +44,28 @@ class JsonColumnTest < ActiveSupport::TestCase
   test "JsonColumn may be an array" do
     t = DModel.new
     assert t.arr.is_a? JsonColumn::JsonColumnArray
+    t.arr = []
+    t.save(:validate => false)
+    t.arr << {fsdfsd: "LKj"}
     t.arr << {fsdfsd: "LKj"}
     t.save(:validate => false)
-    assert t.reload.arr == [{fsdfsd: "LKj"}]
+    arr = t.arr.to_a
+    assert DModel.find(t.id).arr.to_a == arr
+    t.arr = []
+    t.save(:validate => false)
   end
 
   test "it can validate with the right schema" do
     t = DModel.new
     assert t.arr.is_a? JsonColumn::JsonColumnArray
+    t.arr = []
+    t.save(:validate => false)
     t.arr << {fsdfsd: "LKj"}
-    assert t.save
+    assert t.save(:validate => false)
     t.arr << {ponctuality: "LKj"}
     refute t.valid?
+    t.arr = []
+    t.save(:validate => false)
   end
 
 end
