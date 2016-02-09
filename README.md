@@ -19,7 +19,7 @@ gem install json_column
 ```
 ##Setup
 
-It will load the schema file form the app/models/schemas. We decided not to put the file in /db/schema because it is not a database setup script in any way. We would like your opinion on where the json schema file should beé
+It will load the schema file from the app/models/schemas. We decided not to put the file in /db/schema because it is not a database setup script in any way. We would like your opinion on where the json schema file should beé
 
 A json profile schema for a user model could be defined as
 
